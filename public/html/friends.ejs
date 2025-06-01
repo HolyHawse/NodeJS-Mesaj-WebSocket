@@ -1,0 +1,98 @@
+<div class="container mt-4">
+  <div class="main-card card shadow-sm p-4 bg-white">
+    <h2 class="mb-3">Arkadaşlarım</h2>
+    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addFriendModal">Arkadaş Ekle</button>
+    <button class="btn btn-warning mb-3" data-bs-toggle="modal" data-bs-target="#friendRequestsModal">Arkadaşlık İstekleri</button>
+    <button class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#sentFriendRequestsModal">Gönderilen Arkadaşlık İstekleri</button>
+    <ul class="list-group">
+      <% if (friends && friends.length > 0) { %>
+        <% friends.forEach(function(f) { %>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span><%= f.name %> <%= f.surname %> (<%= f.username %>)</span>
+            <div>
+              <a href="/chat?user=<%= f.id %>" class="btn btn-success btn-sm">Mesaj</a>
+              <form action="/friends/delete" method="POST" class="d-inline" onsubmit="return confirm('Arkadaşı silmek istediğinize emin misiniz?')">
+                <input type="hidden" name="friendId" value="<%= f.id %>">
+                <button class="btn btn-danger btn-sm">Sil</button>
+              </form>
+            </div>
+          </li>
+        <% }); %>
+      <% } else { %>
+        <li class="list-group-item">Hiç arkadaşınız yok.</li>
+      <% } %>
+    </ul>
+  </div>
+</div>
+
+<!-- Arkadaş Ekle Modal -->
+<div class="modal fade" id="addFriendModal" tabindex="-1">
+  <div class="modal-dialog">
+    <form class="modal-content" action="/friends/request" method="POST">
+      <div class="modal-header"><h5 class="modal-title">Arkadaş Ekle</h5></div>
+      <div class="modal-body">
+        <input type="text" name="username" class="form-control" placeholder="Kullanıcı adı girin" required>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" type="submit">İstek Gönder</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal fade" id="sentFriendRequestsModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">Gönderilen Arkadaşlık İstekleri</h5></div>
+      <div class="modal-body">
+        <ul class="list-group">
+          <% if (sentRequests && sentRequests.length > 0) { %>
+            <% sentRequests.forEach(function(r) { %>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><%= r.name %> <%= r.surname %> (<%= r.username %>)</span>
+                <form action="/friends/cancel" method="POST" class="d-inline" onsubmit="return confirm('İsteği iptal etmek istediğinize emin misiniz?')">
+                  <input type="hidden" name="requestId" value="<%= r.id %>">
+                  <button class="btn btn-danger btn-sm">İptal Et</button>
+                </form>
+              </li>
+            <% }); %>
+          <% } else { %>
+            <li class="list-group-item">Gönderilmiş istek yok.</li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Arkadaşlık İstekleri Modal -->
+<div class="modal fade" id="friendRequestsModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">Arkadaşlık İstekleri</h5></div>
+      <div class="modal-body">
+        <ul class="list-group">
+          <% if (requests && requests.length > 0) { %>
+            <% requests.forEach(function(r) { %>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><%= r.name %> <%= r.surname %> (<%= r.username %>)</span>
+                <div>
+                  <form action="/friends/accept" method="POST" class="d-inline">
+                    <input type="hidden" name="requestId" value="<%= r.id %>">
+                    <button class="btn btn-success btn-sm">Kabul Et</button>
+                  </form>
+                  <form action="/friends/reject" method="POST" class="d-inline">
+                    <input type="hidden" name="requestId" value="<%= r.id %>">
+                    <button class="btn btn-danger btn-sm">Reddet</button>
+                  </form>
+                </div>
+              </li>
+            <% }); %>
+          <% } else { %>
+            <li class="list-group-item">Bekleyen istek yok.</li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

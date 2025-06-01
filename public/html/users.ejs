@@ -1,0 +1,206 @@
+<div class="container">
+  <h2 class="mt-4 mb-3">Kullanıcılar</h2>
+  <% if (typeof editError !== 'undefined' && editError) { %>
+    <div class="alert alert-danger"><%= editError %></div>
+  <% } %>
+  <ul class="nav nav-tabs" id="userTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="active-users-tab" data-bs-toggle="tab" data-bs-target="#active-users" type="button" role="tab">Aktif Kullanıcılar</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="deleted-users-tab" data-bs-toggle="tab" data-bs-target="#deleted-users" type="button" role="tab">Silinen Kullanıcılar</button>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <!-- Aktif Kullanıcılar -->
+    <div class="tab-pane fade show active" id="active-users" role="tabpanel">
+      <% if (activeUsers && activeUsers.length > 0) { %>
+        <% for(var i=0; i<activeUsers.length; i++) { var u = activeUsers[i]; %>
+          <div class="card user-card shadow-sm mt-3">
+            <div class="card-body d-flex justify-content-between align-items-center">
+              <div>
+                <strong><%= u.name %> <%= u.surname %></strong>
+                <span class="badge bg-secondary ms-2"><%= u.username %></span>
+                <% if (u.isAdmin) { %>
+                  <span class="badge bg-warning text-dark ms-2">Admin</span>
+                <% } %>
+              </div>
+              <div>
+                <button class="btn btn-info btn-sm me-2" onclick="showViewModal(<%= u.id %>)"><i class="bi bi-eye"></i> Görüntüle</button>
+                <button class="btn btn-primary btn-sm me-2" onclick="showEditModal(<%= u.id %>)"><i class="bi bi-pencil"></i> Düzenle</button>
+                <button class="btn btn-danger btn-sm" onclick="showDeleteModal(<%= u.id %>)"><i class="bi bi-trash"></i> Sil</button>
+              </div>
+            </div>
+          </div>
+        <% } %>
+      <% } else { %>
+        <div class="alert alert-info mt-3">Aktif kullanıcı yok.</div>
+      <% } %>
+    </div>
+    <!-- Silinen Kullanıcılar -->
+    <div class="tab-pane fade" id="deleted-users" role="tabpanel">
+      <% if (deletedUsers && deletedUsers.length > 0) { %>
+        <% for(var i=0; i<deletedUsers.length; i++) { var u = deletedUsers[i]; %>
+          <div class="card user-card shadow-sm mt-3">
+            <div class="card-body d-flex justify-content-between align-items-center">
+              <div>
+                <strong><%= u.name %> <%= u.surname %></strong>
+                <span class="badge bg-secondary ms-2"><%= u.username %></span>
+                <% if (u.isAdmin) { %>
+                  <span class="badge bg-warning text-dark ms-2">Admin</span>
+                <% } %>
+              </div>
+              <div>
+                <form action="/activate-user" method="POST" class="d-inline">
+                  <input type="hidden" name="id" value="<%= u.id %>">
+                  <button type="submit" class="btn btn-success btn-sm"><i class="bi bi-arrow-repeat"></i> Aktif Et</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        <% } %>
+      <% } else { %>
+        <div class="alert alert-info mt-3">Silinen kullanıcı yok.</div>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<!-- Görüntüle Modal -->
+<div class="modal fade" id="viewUserModal" tabindex="-1" aria-labelledby="viewUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewUserModalLabel">Kullanıcı Bilgileri</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+      </div>
+      <div class="modal-body">
+        <div><span class="modal-label">Ad Soyad:</span> <span id="viewName"></span></div>
+        <div><span class="modal-label">Kullanıcı Adı:</span> <span id="viewUsername"></span></div>
+        <div><span class="modal-label">TC Kimlik No:</span> <span id="viewTCKimlikNo"></span></div>
+        <div><span class="modal-label">E-Posta:</span> <span id="viewEmail"></span></div>
+        <div><span class="modal-label">Telefon:</span> <span id="viewPhone"></span></div>
+        <div><span class="modal-label">Admin:</span> <span id="viewIsAdmin"></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Düzenle Modal -->
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/edit-user" method="POST">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editUserModalLabel">Kullanıcıyı Düzenle</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="editId" name="id">
+          <div class="mb-2">
+            <label for="editUsername" class="form-label">Kullanıcı Adı</label>
+            <input type="text" class="form-control" id="editUsername" name="username" required>
+          </div>
+          <div class="mb-2">
+            <label for="editName" class="form-label">Ad</label>
+            <input type="text" class="form-control" id="editName" name="name" required>
+          </div>
+          <div class="mb-2">
+            <label for="editSurname" class="form-label">Soyad</label>
+            <input type="text" class="form-control" id="editSurname" name="surname" required>
+          </div>
+          <div class="mb-2">
+            <label for="editTCKimlikNo" class="form-label">TC Kimlik No</label>
+            <input type="text" class="form-control" id="editTCKimlikNo" name="tckimlikno" required>
+          </div>
+          <div class="mb-2">
+            <label for="editEmail" class="form-label">E-Posta</label>
+            <input type="email" class="form-control" id="editEmail" name="email">
+          </div>
+          <div class="mb-2">
+            <label for="editPhone" class="form-label">Telefon</label>
+            <input type="text" class="form-control" id="editPhone" name="phone">
+          </div>
+          <div class="mb-2">
+            <label for="editPassword" class="form-label">Yeni Şifre (değiştirmek istemiyorsan boş bırak)</label>
+            <input type="password" class="form-control" id="editPassword" name="password" autocomplete="new-password">
+          </div>
+          <div class="mb-2">
+            <label for="editIsAdmin" class="form-label">Admin mi?</label>
+            <select class="form-select" id="editIsAdmin" name="isAdmin">
+              <option value="0">Hayır</option>
+              <option value="1">Evet</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Kaydet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Sil Modal -->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/delete-user" method="POST">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteUserModalLabel">Kullanıcıyı Sil</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="deleteId" name="id">
+          <p>Bu kullanıcıyı silmek istediğinize emin misiniz? Kullanıcı kalıcı olarak silinmeyecek, tekrar aktif edilebilir.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger">Sil</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  const allUsers = [
+    <% activeUsers.forEach(function(u, i) { %>
+      <%- JSON.stringify(u) %><%= i < activeUsers.length - 1 || deletedUsers.length > 0 ? ',' : '' %>
+    <% }); %>
+    <% deletedUsers.forEach(function(u, i) { %>
+      <%- JSON.stringify(u) %><%= i < deletedUsers.length - 1 ? ',' : '' %>
+    <% }); %>
+  ];
+
+  function showViewModal(id) {
+    const u = allUsers.find(x => String(x.id) === String(id));
+    if (!u) return;
+    document.getElementById('viewName').innerText = u.name + ' ' + u.surname;
+    document.getElementById('viewUsername').innerText = u.username;
+    document.getElementById('viewTCKimlikNo').innerText = u.tckimlikno || '';
+    document.getElementById('viewEmail').innerText = u.email || '';
+    document.getElementById('viewPhone').innerText = u.phone || '';
+    document.getElementById('viewIsAdmin').innerText = u.isAdmin ? 'Evet' : 'Hayır';
+    new bootstrap.Modal(document.getElementById('viewUserModal')).show();
+  }
+
+  function showEditModal(id) {
+    const u = allUsers.find(x => String(x.id) === String(id));
+    if (!u) return;
+    document.getElementById('editId').value = u.id;
+    document.getElementById('editUsername').value = u.username;
+    document.getElementById('editName').value = u.name;
+    document.getElementById('editSurname').value = u.surname;
+    document.getElementById('editTCKimlikNo').value = u.tckimlikno || '';
+    document.getElementById('editEmail').value = u.email || '';
+    document.getElementById('editPhone').value = u.phone || '';
+    document.getElementById('editIsAdmin').value = u.isAdmin ? '1' : '0';
+    new bootstrap.Modal(document.getElementById('editUserModal')).show();
+  }
+
+  function showDeleteModal(id) {
+    document.getElementById('deleteId').value = id;
+    new bootstrap.Modal(document.getElementById('deleteUserModal')).show();
+  }
+</script>

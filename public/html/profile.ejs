@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="row mt-4 align-items-start">
+    <div class="col-md-8 offset-md-2 mb-4">
+      <div class="card profile-card shadow-sm">
+        <div class="card-body">
+          <h4 class="card-title mb-3">Profil Bilgilerim</h4>
+          <% if (typeof editError !== 'undefined' && editError) { %>
+            <div class="alert alert-danger"><%= editError %></div>
+          <% } %>
+          <div class="mb-2"><span class="modal-label">Ad Soyad:</span> <%= user.name %> <%= user.surname %></div>
+          <div class="mb-2"><span class="modal-label">Kullanıcı Adı:</span> <%= user.username %></div>
+          <div class="mb-2"><span class="modal-label">TC Kimlik No:</span> <%= user.tckimlikno || '' %></div>
+          <div class="mb-2"><span class="modal-label">E-Posta:</span> <%= user.email || '' %></div>
+          <div class="mb-2"><span class="modal-label">Telefon:</span> <%= user.phone || '' %></div>
+          <div class="mb-2"><span class="modal-label">Admin:</span> <%= user.isAdmin ? 'Evet' : 'Hayır' %></div>
+          <button class="btn btn-primary mt-3" onclick="showEditModal()">Bilgilerimi Düzenle</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Düzenle Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/edit-profile" method="POST">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProfileModalLabel">Profilimi Düzenle</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="id" value="<%= user.id %>">
+          <div class="mb-2">
+            <label for="editUsername" class="form-label">Kullanıcı Adı</label>
+            <input type="text" class="form-control" id="editUsername" name="username" value="<%= user.username %>" required>
+          </div>
+          <div class="mb-2">
+            <label for="editName" class="form-label">Ad</label>
+            <input type="text" class="form-control" id="editName" name="name" value="<%= user.name %>" required>
+          </div>
+          <div class="mb-2">
+            <label for="editSurname" class="form-label">Soyad</label>
+            <input type="text" class="form-control" id="editSurname" name="surname" value="<%= user.surname %>" required>
+          </div>
+          <div class="mb-2">
+            <label for="editTCKimlikNo" class="form-label">TC Kimlik No</label>
+            <input type="text" class="form-control" id="editTCKimlikNo" name="tckimlikno" value="<%= user.tckimlikno || '' %>" required>
+          </div>
+          <div class="mb-2">
+            <label for="editEmail" class="form-label">E-Posta</label>
+            <input type="email" class="form-control" id="editEmail" name="email" value="<%= user.email || '' %>">
+          </div>
+          <div class="mb-2">
+            <label for="editPhone" class="form-label">Telefon</label>
+            <input type="text" class="form-control" id="editPhone" name="phone" value="<%= user.phone || '' %>">
+          </div>
+          <div class="mb-2">
+            <label for="editPassword" class="form-label">Yeni Şifre (değiştirmek istemiyorsan boş bırak)</label>
+            <input type="password" class="form-control" id="editPassword" name="password" autocomplete="new-password">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Kaydet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  function showEditModal() {
+    new bootstrap.Modal(document.getElementById('editProfileModal')).show();
+  }
+</script>

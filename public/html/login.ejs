@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login / Register</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="/css/login.css" />
+</head>
+<body>
+  <div id="particles-js"></div>
+  <div class="toggle-buttons">
+    <button id="toggleParticlesBtn" class="btn btn-secondary btn-sm mb-2" type="button">
+      <i class="bi bi-stars"></i> Partikülleri Kapat
+    </button>
+    <button id="toggleThemeBtn" class="btn btn-light btn-sm" type="button">
+      <i id="themeIcon" class="bi bi-moon"></i> Aydınlık Mod
+    </button>
+  </div>
+  <div id="login-box">
+    <div class="tab-buttons">
+      <button id="tabLogin" class="tab-btn active" type="button">Giriş Yap</button>
+      <button id="tabRegister" class="tab-btn" type="button">Kayıt Ol</button>
+    </div>
+    <div class="dots-line">
+      <span class="dot" id="dot-login"></span>
+      <span class="line"></span>
+      <span class="dot" id="dot-register"></span>
+    </div>
+    <!-- Login Form -->
+    <form id="loginForm" action="/login" method="POST" autocomplete="off">
+      <div class="form-group">
+        <label for="username">Kullanıcı Adı</label>
+        <input type="text" id="username" name="username" class="form-control" autocomplete="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Şifre</label>
+        <input type="password" id="password" name="password" class="form-control" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn btn-custom">Giriş Yap</button>
+      <% if (error) { %>
+        <p class="error"><%= error %></p>
+      <% } %>
+    </form>
+    <!-- Register Form -->
+<form id="registerForm" action="/register" method="POST" style="display:none;">
+  <div class="row mb-3">
+    <div class="col">
+      <label for="reg_name">Ad</label>
+      <input type="text" id="reg_name" name="name" class="form-control" required>
+    </div>
+    <div class="col">
+      <label for="reg_surname">Soyad</label>
+      <input type="text" id="reg_surname" name="surname" class="form-control" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="reg_username">Kullanıcı Adı</label>
+    <input type="text" id="reg_username" name="username" class="form-control" required>
+  </div>
+  <div class="form-group">
+    <label for="reg_tckimlikno">TC Kimlik No</label>
+    <input type="text" id="reg_tckimlikno" name="tckimlikno" class="form-control" required>
+  </div>
+  <div class="form-group">
+    <label for="reg_password">Şifre</label>
+    <input type="password" id="reg_password" name="password" class="form-control" required>
+  </div>
+  <button type="submit" class="btn btn-custom">Kayıt Ol</button>
+</form>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+  <script>
+    function startParticles(color) {
+      particlesJS('particles-js', {
+        "particles": {
+          "number": { "value": 100, "density": { "enable": true, "value_area": 500 } },
+          "color": { "value": "#b1c900" },
+          "shape": { "type": "circle" },
+          "opacity": { "value": 0.5 },
+          "size": { "value": 5, "random": true },
+          "line_linked": {
+            "enable": true,
+            "distance": 150,
+            "color": color || "#ffffff",
+            "opacity": 0.4,
+            "width": 1
+          },
+          "move": { "enable": true, "speed": 6 }
+        },
+        "interactivity": {
+          "events": {
+            "onhover": { "enable": true, "mode": "repulse" },
+            "onclick": { "enable": true, "mode": "push" },
+            "resize": true
+          },
+          "modes": {
+            "repulse": { "distance": 100 },
+            "push": { "particles_nb": 4 }
+          }
+        },
+        "retina_detect": true
+      });
+    }
+    function restartParticles(color) {
+      if(window.pJSDom && window.pJSDom.length) {
+        window.pJSDom[0].pJS.fn.vendors.destroypJS();
+        window.pJSDom = [];
+      }
+      startParticles(color);
+    }
+    function updateDotsLineColor(activeTab) {
+      var dotLogin = document.getElementById('dot-login');
+      var dotRegister = document.getElementById('dot-register');
+      dotLogin.classList.remove('active-dot', 'hover-dot');
+      dotRegister.classList.remove('active-dot', 'hover-dot');
+      if (activeTab === 'login') {
+        dotLogin.classList.add('active-dot');
+      } else if (activeTab === 'register') {
+        dotRegister.classList.add('active-dot');
+      }
+      var line = document.querySelector('.dots-line .line');
+      if (line) {
+        line.style.background = document.body.classList.contains('light-mode') ? '#b1bfc9' : '#fff';
+      }
+    }
+    function setTheme(light) {
+      if (light) {
+        document.body.classList.add('light-mode');
+        document.body.classList.remove('dark-mode');
+        document.getElementById('themeIcon').className = 'bi bi-moon';
+        document.getElementById('toggleThemeBtn').innerHTML = '<i id="themeIcon" class="bi bi-moon"></i> Karanlık Mod';
+        document.body.style.background = 'linear-gradient(135deg, #f7f8fa 0%, #e6e8eb 100%)';
+        restartParticles("#b1bfc9");
+      } else {
+        document.body.classList.remove('light-mode');
+        document.body.classList.add('dark-mode');
+        document.getElementById('themeIcon').className = 'bi bi-sun';
+        document.getElementById('toggleThemeBtn').innerHTML = '<i id="themeIcon" class="bi bi-sun"></i> Aydınlık Mod';
+        document.body.style.background = '';
+        restartParticles("#ffffff");
+      }
+      updateDotsLineColor(document.getElementById('tabLogin').classList.contains('active') ? 'login' : 'register');
+    }
+    function setParticlesVisibility(visible) {
+      var particlesDiv = document.getElementById('particles-js');
+      if (visible) {
+        particlesDiv.style.display = 'block';
+        document.getElementById('toggleParticlesBtn').innerHTML = '<i class="bi bi-stars"></i> Partikülleri Kapat';
+        restartParticles(document.body.classList.contains('light-mode') ? "#b1bfc9" : "#ffffff");
+      } else {
+        particlesDiv.style.display = 'none';
+        document.getElementById('toggleParticlesBtn').innerHTML = '<i class="bi bi-stars"></i> Partikülleri Aç';
+      }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      let light = localStorage.getItem('theme') === 'light';
+      let showParticles = localStorage.getItem('showParticles');
+      showParticles = showParticles === null ? true : (showParticles === 'true');
+      setTheme(light);
+      setParticlesVisibility(showParticles);
+
+      document.getElementById('toggleThemeBtn').addEventListener('click', function() {
+        light = !document.body.classList.contains('light-mode');
+        localStorage.setItem('theme', light ? 'light' : 'dark');
+        setTheme(light);
+      });
+      document.getElementById('toggleParticlesBtn').addEventListener('click', function() {
+        showParticles = !showParticles;
+        localStorage.setItem('showParticles', showParticles);
+        setParticlesVisibility(showParticles);
+      });
+
+      const tabLogin = document.getElementById('tabLogin');
+      const tabRegister = document.getElementById('tabRegister');
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      const dotLogin = document.getElementById('dot-login');
+      const dotRegister = document.getElementById('dot-register');
+
+      tabLogin.addEventListener('click', function() {
+        tabLogin.classList.add('active');
+        tabRegister.classList.remove('active');
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+        updateDotsLineColor('login');
+      });
+      tabRegister.addEventListener('click', function() {
+        tabRegister.classList.add('active');
+        tabLogin.classList.remove('active');
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+        updateDotsLineColor('register');
+      });
+
+      // Hover efektleri
+      tabLogin.addEventListener('mouseenter', function() {
+        dotLogin.classList.add('hover-dot');
+      });
+      tabLogin.addEventListener('mouseleave', function() {
+        dotLogin.classList.remove('hover-dot');
+      });
+      tabRegister.addEventListener('mouseenter', function() {
+        dotRegister.classList.add('hover-dot');
+      });
+      tabRegister.addEventListener('mouseleave', function() {
+        dotRegister.classList.remove('hover-dot');
+      });
+
+      // İlk yüklemede login aktif
+      updateDotsLineColor('login');
+    });
+  </script>
+</body>
+</html>

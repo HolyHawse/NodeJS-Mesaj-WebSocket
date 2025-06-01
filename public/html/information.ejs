@@ -1,0 +1,196 @@
+<div class="about-card" id="aboutCard">
+  <div class="about-actions" id="aboutActions">
+    <button class="btn btn-outline-secondary btn-sm me-2" onclick="hideActionsAndPrint()" title="Yazdır">
+      <i class="bi bi-printer"></i> Yazdır
+    </button>
+  </div>
+  <div class="text-center">
+    <img src="/img/avatar.jpg" alt="Avatar" class="about-avatar mb-2" onerror="this.style.display='none'">
+    <div class="about-title">İsa Bütün</div>
+    <div class="about-subtitle">Raporlama ve Veritabanı Uzmanı</div>
+  </div>
+  <div class="about-section-title"><i class="bi bi-person"></i> Kişisel Bilgiler</div>
+  <ul class="about-list">
+    <li><i class="bi bi-person-badge"></i> <b>Adım ve Soyadım:</b> <span>İsa Bütün</span></li>
+    <li><i class="bi bi-envelope"></i> <b>E-Posta:</b> <span>isabtn06@gmail.com</span></li>
+    <li><i class="bi bi-geo-alt"></i> <b>Lokasyon:</b> <span>Türkiye (Ankara/Gölbaşı)</span></li>
+  </ul>
+  <div class="about-section-title"><i class="bi bi-award"></i> Uzmanlıklar</div>
+  <ul class="about-list">
+    <li>
+      <i class="bi bi-database"></i> Veritabanı Yönetimi (MSSQL, MYSQL, SQLite)
+      <span title="4.5/5" style="font-size:1em; color:#1976d2; vertical-align:middle; position:relative; top:-3px;">
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-half"></i>
+      </span>
+    </li>
+    <li>
+      <i class="bi bi-bar-chart"></i> Raporlama Sistemleri
+      <span title="4.5/5" style="font-size:1em; color:#1976d2; vertical-align:middle; position:relative; top:-3px;">
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-half"></i>
+      </span>
+    </li>
+    <li>
+      <i class="bi bi-code-slash"></i> Web Uygulamaları (Node.js, Express, EJS, Bootstrap)
+      <span title="3.5/5" style="font-size:1em; color:#1976d2; vertical-align:middle; position:relative; top:-3px;">
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-half"></i>
+        <i class="bi bi-star"></i>
+      </span>
+    </li>
+  </ul>
+  <div class="about-section-title"><i class="bi bi-info-circle"></i> Hakkımda</div>
+  <div class="mb-2 about-desc">
+    3 yıla yakın süredir MSSQL veritabanı yönetimi ve raporlama alanında aktif olarak çalışmaktayım. Stimulsoft ve FastReport araçlarıyla kullanıcı dostu dashboardlar ve performanslı sorgular geliştirme konusunda deneyimliyim. Veri analizi, sistem optimizasyonu ve müşteri ihtiyaçlarına özel çözümler üretme konularında yetkinim.
+    <br><br>
+    <b>Hedefim:</b> Kullanıcıların veriye hızlı, güvenli ve görsel olarak zengin bir şekilde ulaşmasını sağlamak.
+  </div>
+  <div class="about-section-title"><i class="bi bi-link-45deg"></i> Bağlantılar</div>
+  <ul class="about-list">
+    <li><i class="bi bi-github"></i> <a href="https://github.com/" target="_blank">GitHub</a></li>
+    <li><i class="bi bi-linkedin"></i> <a href="https://www.linkedin.com/in/isa-b%C3%BCt%C3%BCn-100371243/" target="_blank">Linkedin</a></li>
+  </ul>
+</div>
+
+<style>
+  .about-card {
+    max-width: 794px;
+    min-height: 1123px;
+    margin: 40px auto 0 auto;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.08), 0 1.5px 6px rgba(0,0,0,0.04);
+    padding: 40px 32px 32px 32px;
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .about-avatar {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #0d6efd;
+    box-shadow: 0 2px 12px rgba(13,110,253,0.12);
+    margin-bottom: 18px;
+  }
+  .about-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #0d6efd;
+    margin-bottom: 10px;
+  }
+  .about-subtitle {
+    font-size: 1.2rem;
+    color: #6c757d;
+    margin-bottom: 24px;
+  }
+  .about-section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #495057;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .about-list {
+    padding-left: 0;
+    list-style: none;
+    margin-bottom: 0;
+  }
+  .about-list li {
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+    color: #333;
+  }
+  .about-list i {
+    color: #0d6efd;
+    margin-right: 8px;
+  }
+  .about-actions {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    z-index: 2;
+  }
+  @media (max-width: 900px) {
+    .about-card {
+      max-width: 100%;
+      min-height: unset;
+      padding: 24px 8px;
+    }
+  }
+  @media (max-width: 600px) {
+    .about-title { font-size: 1.5rem; }
+    .about-actions { position: static; margin-bottom: 16px; text-align: right; }
+  }
+  @media print {
+    body, html {
+      background: #fff !important;
+    }
+    nav, .about-actions, .navbar, footer {
+      display: none !important;
+    }
+    .about-card {
+      box-shadow: none !important;
+      border-radius: 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
+      min-height: 0 !important;
+      padding: 0 0 0 0 !important;
+      page-break-after: avoid;
+    }
+  }
+  .about-desc {
+    color: #444;
+    background: transparent;
+    border-radius: 8px;
+    padding: 0;
+    transition: color 0.2s, background 0.2s;
+  }
+  body.dark-mode .about-card {
+    background: #23272b !important;
+    color: #e2e2e2;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.18), 0 1.5px 6px rgba(0,0,0,0.14);
+  }
+  body.dark-mode .about-list li,
+  body.dark-mode .about-section-title {
+    color: #e2e2e2;
+  }
+  body.dark-mode .about-list i {
+    color: #0d6efd;
+  }
+  .about-desc {
+    color: #444;
+    background: transparent;
+    border-radius: 8px;
+    padding: 0;
+    transition: color 0.2s, background 0.2s;
+  }
+  body.dark-mode .about-desc {
+    color: #e2e2e2;
+    background: transparent;
+  }
+</style>
+<script>
+  // Yazdırma sırasında butonları gizle/göster
+  function hideActionsAndPrint() {
+    const actions = document.getElementById('aboutActions');
+    actions.style.display = 'none';
+    window.print();
+    setTimeout(() => { actions.style.display = ''; }, 500);
+  }
+</script>
