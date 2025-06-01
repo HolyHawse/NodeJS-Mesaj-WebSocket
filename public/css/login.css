@@ -1,0 +1,193 @@
+html, body {
+    height: 100%;
+    background: black;
+    min-height: 100vh;
+    position: relative;
+}
+#particles-js {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: 50% 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+#login-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    min-height: 410px;
+    border: 1px solid #ccc;
+    background: rgba(48, 46, 45, 1);
+    padding: 28px 20px 20px 20px;
+    z-index: 10001;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+    transition: background 0.3s, color 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#login-box h1 {
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+}
+#login-box label {
+    color: white;
+}
+#login-box input[type="text"],
+#login-box input[type="password"] {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: rgba(98, 96, 96, 1);
+    color: white;
+    display: block;
+    transition: background 0.3s, color 0.3s, border 0.3s;
+}
+#login-box input[type="text"]:focus,
+#login-box input[type="password"]:focus {
+    outline: 2px solid #b1c900;
+    background: #23272b;
+    color: #fff;
+}
+#login-box button[type="submit"], #login-box .btn-custom {
+    width: 100%;
+    background-color: #b1c900;
+    color: #23272b;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 4px;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    transition: background-color 0.3s;
+}
+#login-box button[type="submit"]:hover, #login-box .btn-custom:hover {
+    background-color: #23272b;
+    color: #fff;
+}
+.tab-buttons {
+    margin-bottom: 1.2rem;
+    gap: 10px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+.tab-btn {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #b1c900;
+    padding: 0.4rem 1.2rem;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    position: relative;
+    z-index: 2;
+}
+.tab-btn.active, .tab-btn:hover {
+    background: #23272b;
+    color: #fff;
+}
+.dots-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    gap: 8px;
+}
+.dots-line .dot {
+    width: 12px;
+    height: 12px;
+    background: #b1c900;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+.dots-line .dot.active-dot,
+.dots-line .dot.hover-dot {
+    background: #fff;
+    box-shadow: 0 0 0 2px #b1c900;
+}
+.dots-line .line {
+    width: 60px;
+    height: 3px;
+    background: #fff;
+    border-radius: 2px;
+    display: inline-block;
+    transition: background 0.3s;
+}
+.toggle-buttons {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.error {
+    color: #c00;
+    margin-top: 0.7rem;
+    text-align: center;
+}
+@media (max-width: 480px) {
+    #login-box {
+        width: 98vw;
+        min-height: 420px;
+        padding: 1.5rem 0.7rem 1.2rem 0.7rem;
+    }
+    .toggle-buttons {
+        left: 8px;
+        bottom: 8px;
+    }
+}
+/* Açık mod stilleri */
+body.light-mode {
+    background: linear-gradient(135deg, #f7f8fa 0%, #e6e8eb 100%) !important;
+}
+body.light-mode #login-box {
+    background: #f7f8fa;
+    color: #23272b;
+    border: 1px solid #b1bfc9;
+}
+body.light-mode #login-box label {
+    color: #23272b;
+}
+body.light-mode .tab-btn {
+    color: #375a7f;
+}
+body.light-mode .tab-btn.active,
+body.light-mode .tab-btn:hover {
+    background: #e9ecef;
+    color: #223a5f;
+}
+body.light-mode .dots-line .dot.active-dot,
+body.light-mode .dots-line .dot.hover-dot {
+    background: #b1bfc9;
+    box-shadow: 0 0 0 2px #375a7f;
+}
+body.light-mode .dots-line .line {
+    background: #b1bfc9 !important;
+}
+body.light-mode #login-box input[type="text"],
+body.light-mode #login-box input[type="password"] {
+    background: #f7f8fa;
+    color: #23272b;
+    border: 1px solid #b1bfc9;
+}
+body.light-mode #login-box input[type="text"]:focus,
+body.light-mode #login-box input[type="password"]:focus {
+    background: #fff;
+    color: #23272b;
+    outline: 2px solid #375a7f;
+}
